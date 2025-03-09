@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronopost Tracking</title>
+</head>
+<body>
+    <h2>Track Your Chronopost Shipment</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="tracking_number">Enter Tracking Number:</label>
+        <input type="text" id="tracking_number" name="tracking_number" required>
+        <button type="submit">Track</button>
+    </form>
+
+    {% if tracking_info %}
+        <h3>Tracking Details:</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Steps of my delivery</th>
+                    <th>Complementary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in tracking_info %}
+                    <tr>
+                        <td>{{ row.0 }}</td>  <!-- Date with day -->
+                        <td>{{ row.1 }}</td>  <!-- Delivery step -->
+                        <td>{{ row.2 }}</td>  <!-- Complementary info -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
